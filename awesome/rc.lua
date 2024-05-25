@@ -24,6 +24,9 @@ require("awful.hotkeys_popup.keys")
 local debian = require("debian.menu")
 local has_fdo, freedesktop = pcall(require, "freedesktop")
 
+-- Custom Path's
+local home_path = os.getenv("HOME")
+
 -- {{{ Error handling
 -- Check if awesome encountered an error during startup and fell back to
 -- another config (This code will only ever execute for the fallback config)
@@ -52,6 +55,7 @@ end
 -- {{{ Variable definitions
 -- Themes define colours, icons, font and wallpapers.
 beautiful.init(gears.filesystem.get_themes_dir() .. "default/theme.lua")
+beautiful.get().wallpaper = home_path .. "/.dotfiles/wallpapers/Deep_Purple.jpg"
 
 -- This is used later as the default terminal and editor to run.
 terminal = "x-terminal-emulator"
