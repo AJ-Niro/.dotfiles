@@ -604,4 +604,4 @@ client.connect_signal("unfocus", function(c) c.border_color = beautiful.border_n
 -- }}}
 
 -- Custom Scripts
-awful.spawn.with_shell("~/.dotfiles/set_resolution.sh")
+awful.spawn.with_shell(home_path .. "/.dotfiles/awesome/scripts/setup_environment.sh")
