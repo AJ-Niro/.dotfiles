@@ -254,9 +254,9 @@ awful.screen.connect_for_each_screen(function(s)
             mykeyboardlayout,
             wibox.widget.systray(),
             mytextclock,
-            s.mylayoutbox,
+            -- s.mylayoutbox,
+            battery_widget({ show_current_level = true }),
             logout_menu_widget(),
-            battery_widget({ show_current_level = true}),
         },
     }
 end)
