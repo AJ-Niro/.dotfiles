@@ -16,6 +16,7 @@ local menubar = require("menubar")
 local hotkeys_popup = require("awful.hotkeys_popup")
 -- Custom Libraries
 local battery_widget = require("awesome-wm-widgets.battery-widget.battery")
+local logout_menu_widget = require("awesome-wm-widgets.logout-menu-widget.logout-menu")
 -- Enable hotkeys help widget for VIM and other apps
 -- when client with a matching name is opened:
 require("awful.hotkeys_popup.keys")
@@ -253,6 +254,7 @@ awful.screen.connect_for_each_screen(function(s)
             wibox.widget.systray(),
             mytextclock,
             s.mylayoutbox,
+            logout_menu_widget(),
             battery_widget({ show_current_level = true}),
         },
     }
