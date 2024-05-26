@@ -1,6 +1,10 @@
-## Dependencies
+## Pre-install Battery Widget
 
-### Install Battery Widget
+### Packages
+* xrandr
+* autorandr
+
+### UI libraries
 
 * Clone [awesome-wm-widgets](https://github.com/streetturtle/awesome-wm-widgets/tree/master) into ~/.config/awesome
 
