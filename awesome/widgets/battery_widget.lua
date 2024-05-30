@@ -1,9 +1,6 @@
 local wibox = require("wibox")
 local gears = require("gears")
-local beautiful = require("beautiful")
-
-local home_path = os.getenv("HOME")
-beautiful.init(home_path .. "/.dotfiles/awesome/config/theme.lua")
+local beautiful = require("..config.custom_beautiful")
 
 -- Function to get battery status
 local function get_battery_status()
