@@ -9,9 +9,10 @@ local function get_battery_status()
   fd:close()
 
   local battery_percentage = status:match("(%d?%d?%d)%%")
+  local charging_status = status:match("Discharging") and "" or "(Charging)"
 
   if battery_percentage then
-    return battery_percentage .. "%"
+    return battery_percentage .. "% " .. charging_status
   else
     return "N/A"
   end
@@ -31,9 +32,9 @@ local battery_widget = wibox.widget {
   widget = wibox.container.margin
 }
 
--- Update the battery widget every 60 seconds
+-- Update the battery widget every 30 seconds
 gears.timer {
-  timeout = 60,
+  timeout = 30,
   autostart = true,
   callback = function()
     battery_widget.text = "Battery: " .. get_battery_status()
