@@ -3,7 +3,7 @@ local gears = require("gears")
 local beautiful = require("beautiful")
 
 local home_path = os.getenv("HOME")
-beautiful.init(home_path .. "/.dotfiles/awesome/theme.lua")
+beautiful.init(home_path .. "/.dotfiles/awesome/config/theme.lua")
 
 -- Function to get battery status
 local function get_battery_status()
