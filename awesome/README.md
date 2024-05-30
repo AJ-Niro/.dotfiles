@@ -2,6 +2,7 @@
 
 ### Packages
 * xrandr
+* acpi
 
 ## Install
 
