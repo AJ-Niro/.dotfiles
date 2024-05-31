@@ -1,30 +1,16 @@
 local wibox = require("wibox")
-local gears = require("gears")
+local awful = require("awful")
 local beautiful = require("..config.custom_beautiful")
 
--- Function to get battery status
-local function get_battery_status()
-  local fd = io.popen("acpi -b")
-  local status = fd:read("*all")
-  fd:close()
+-- Create the textbox widget for battery status
+local battery_textbox = wibox.widget {
+  widget = wibox.widget.textbox,
+  font = beautiful.font, -- Use the font from the theme
+}
 
-  local battery_percentage = status:match("(%d?%d?%d)%%")
-  local charging_status = status:match("Discharging") and "" or "(Charging)"
-
-  if battery_percentage then
-    return battery_percentage .. "% " .. charging_status
-  else
-    return "N/A"
-  end
-end
-
--- Create the battery widget with theme font and padding
+-- Create a container for the battery widget with padding
 local battery_widget = wibox.widget {
-  {
-    widget = wibox.widget.textbox,
-    text = "Battery: " .. get_battery_status(),
-    font = beautiful.font,     -- Use the font from the theme
-  },
+  battery_textbox,
   left = 10,
   right = 10,
   top = 5,
@@ -32,13 +18,21 @@ local battery_widget = wibox.widget {
   widget = wibox.container.margin
 }
 
--- Update the battery widget every 30 seconds
-gears.timer {
-  timeout = 30,
-  autostart = true,
-  callback = function()
-    battery_widget.text = "Battery: " .. get_battery_status()
+-- Function to update battery status
+local function update_battery_widget(widget, stdout)
+  local battery_percentage = stdout:match("(%d?%d?%d)%%")
+  local charging_status = stdout:match("Discharging") and "" or "(Charging)"
+
+  if battery_percentage then
+    widget.text = "Battery: " .. battery_percentage .. "% " .. charging_status
+  else
+    widget.text = "Battery: N/A"
   end
-}
+end
+
+-- Use awful.widget.watch to periodically update the textbox widget
+awful.widget.watch("acpi -b", 10, function(widget, stdout)
+  update_battery_widget(battery_textbox, stdout)
+end)
 
 return battery_widget
