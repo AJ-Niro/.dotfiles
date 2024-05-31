@@ -373,7 +373,13 @@ globalkeys = gears.table.join(
     awful.key({ modkey }, "d", function()
                   awful.spawn.with_shell("xrandr --auto")
               end,
-              {description = "Auto xrander", group = "Custom"})
+              {description = "Auto xrander", group = "Custom"}),
+
+    -- Take a screenshot with gnome-screenshot and save it to ~/Pictures/Screenshots/
+    awful.key({}, "Print", function ()
+            awful.spawn.with_shell("gnome-screenshot -a -c -f ~/Pictures/Screenshots/Screenshot_from_$(date +'%Y-%m-%d_%H-%M-%S').png")
+        end,
+        {description = "take a screenshot and save to ~/Pictures/Screenshots/", group = "hotkeys"})
 )
 
 clientkeys = gears.table.join(
