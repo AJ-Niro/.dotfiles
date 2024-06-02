@@ -17,6 +17,7 @@ local hotkeys_popup = require("awful.hotkeys_popup")
 -- Custom widgets
 local battery_widget = require("widgets.battery.battery_widget")
 local volume_widget = require("widgets.volume.volume_widget")
+local brightness_widget = require("widgets.brightness.brightness_widget")
 -- Enable hotkeys help widget for VIM and other apps
 -- when client with a matching name is opened:
 require("awful.hotkeys_popup.keys")
@@ -254,6 +255,7 @@ awful.screen.connect_for_each_screen(function(s)
             mykeyboardlayout,
             wibox.widget.systray(),
             mytextclock,
+            brightness_widget.get_widget(),
             volume_widget.get_widget(),
             battery_widget,
             -- s.mylayoutbox,
@@ -389,6 +391,12 @@ globalkeys = gears.table.join(
             volume_widget.mute()
         end, {description = "mute volume", group = "custom"}),
 
+    awful.key({ }, "XF86MonBrightnessUp", function ()
+        brightness_widget.increase()
+    end),
+    awful.key({ }, "XF86MonBrightnessDown", function ()
+        brightness_widget.decrease()
+    end),
     -- Take a screenshot with gnome-screenshot and save it to ~/Pictures/Screenshots/
     awful.key({}, "Print", function ()
             awful.spawn.with_shell("gnome-screenshot -a -c -f ~/Pictures/Screenshots/Screenshot_from_$(date +'%Y-%m-%d_%H-%M-%S').png")
