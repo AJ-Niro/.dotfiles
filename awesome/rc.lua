@@ -397,6 +397,16 @@ globalkeys = gears.table.join(
     awful.key({ }, "XF86MonBrightnessDown", function ()
         brightness_widget.decrease()
     end),
+    awful.key({}, "XF86AudioPlay", function ()
+        awful.spawn.with_shell("playerctl play-pause")
+    end),
+    awful.key({}, "XF86AudioNext", function ()
+        awful.spawn.with_shell("playerctl next")
+    end),
+    awful.key({}, "XF86AudioPrev", function ()
+        awful.spawn.with_shell("playerctl previous")
+    end),
+
     -- Take a screenshot with gnome-screenshot and save it to ~/Pictures/Screenshots/
     awful.key({}, "Print", function ()
             awful.spawn.with_shell("gnome-screenshot -a -c -f ~/Pictures/Screenshots/Screenshot_from_$(date +'%Y-%m-%d_%H-%M-%S').png")

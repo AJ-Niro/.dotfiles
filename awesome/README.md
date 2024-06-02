@@ -7,6 +7,7 @@
 * xrandr
 * acpi
 * amixer
+* playerctl
 
 ## Install
 
