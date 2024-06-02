@@ -6,6 +6,7 @@
 ### Packages
 * xrandr
 * acpi
+* amixer
 
 ## Install
 

@@ -374,6 +374,18 @@ globalkeys = gears.table.join(
                   awful.spawn.with_shell("xrandr --auto")
               end,
               {description = "Auto xrander", group = "Custom"}),
+    -- Manage Volume
+    awful.key({}, "XF86AudioRaiseVolume", function ()
+            awful.spawn("amixer set Master 5%+")
+        end, {description = "increase volume", group = "custom"}),
+
+    awful.key({}, "XF86AudioLowerVolume", function ()
+            awful.spawn("amixer set Master 5%-")
+        end, {description = "decrease volume", group = "custom"}),
+
+    awful.key({}, "XF86AudioMute", function ()
+            awful.spawn("amixer set Master toggle")
+        end, {description = "mute volume", group = "custom"}),
 
     -- Take a screenshot with gnome-screenshot and save it to ~/Pictures/Screenshots/
     awful.key({}, "Print", function ()
