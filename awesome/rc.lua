@@ -16,6 +16,7 @@ local menubar = require("menubar")
 local hotkeys_popup = require("awful.hotkeys_popup")
 -- Custom widgets
 local battery_widget = require("widgets.battery.battery_widget")
+local volume_widget = require("widgets.volume.volume_widget")
 -- Enable hotkeys help widget for VIM and other apps
 -- when client with a matching name is opened:
 require("awful.hotkeys_popup.keys")
@@ -253,6 +254,7 @@ awful.screen.connect_for_each_screen(function(s)
             mykeyboardlayout,
             wibox.widget.systray(),
             mytextclock,
+            volume_widget.get_widget(),
             battery_widget,
             -- s.mylayoutbox,
         },
@@ -376,15 +378,15 @@ globalkeys = gears.table.join(
               {description = "Auto xrander", group = "Custom"}),
     -- Manage Volume
     awful.key({}, "XF86AudioRaiseVolume", function ()
-            awful.spawn("amixer set Master 5%+")
+            volume_widget.increase()
         end, {description = "increase volume", group = "custom"}),
 
     awful.key({}, "XF86AudioLowerVolume", function ()
-            awful.spawn("amixer set Master 5%-")
+            volume_widget.decrease()
         end, {description = "decrease volume", group = "custom"}),
 
     awful.key({}, "XF86AudioMute", function ()
-            awful.spawn("amixer set Master toggle")
+            volume_widget.mute()
         end, {description = "mute volume", group = "custom"}),
 
     -- Take a screenshot with gnome-screenshot and save it to ~/Pictures/Screenshots/
