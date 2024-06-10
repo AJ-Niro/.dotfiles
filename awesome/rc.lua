@@ -123,8 +123,34 @@ else
 end
 
 
-mylauncher = awful.widget.launcher({ image = beautiful.awesome_icon,
-                                     menu = mymainmenu })
+local awesome_icon_widget = wibox.widget {
+    image  = home_path .. "/.dotfiles/awesome/config/awesomewm-icon.svg",
+    resize = true, -- Resizes the image to fit the widget size
+    widget = wibox.widget.imagebox,
+}
+
+local awesome_icon_resizer_widget = wibox.widget {
+    {
+        awesome_icon_widget,
+        layout = wibox.layout.fixed.vertical,
+    },
+    forced_width  = 26,  -- Set the desired width
+    forced_height = 26,  -- Set the desired height
+    widget = wibox.container.constraint,
+}
+
+local awesome_icon_container_widget = wibox.widget {
+    {
+        awesome_icon_resizer_widget,
+        layout = wibox.layout.fixed.vertical,
+    },
+    halign = 'center', -- Horizontal alignment
+    valign = 'center', -- Vertical alignment
+    widget = wibox.container.place,
+}
+
+-- mylauncher = awful.widget.launcher({ image = beautiful.awesome_icon,
+--                                      menu = mymainmenu })
 
 -- Menubar configuration
 menubar.utils.terminal = terminal -- Set the terminal for applications that require it
@@ -285,7 +311,9 @@ awful.screen.connect_for_each_screen(function(s)
         layout = wibox.layout.align.horizontal,
         { -- Left widgets
             layout = wibox.layout.fixed.horizontal,
-            mylauncher,
+            spacing = 3,
+            -- mylauncher,
+            awesome_icon_container_widget,
             s.mytaglist,
             s.mypromptbox,
         },
