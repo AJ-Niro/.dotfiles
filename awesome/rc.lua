@@ -18,6 +18,7 @@ local hotkeys_popup = require("awful.hotkeys_popup")
 local battery_widget = require("widgets.battery.battery_widget")
 local volume_widget = require("widgets.volume.volume_widget")
 local brightness_widget = require("widgets.brightness.brightness_widget")
+local calendar_widget = require("widgets.calendar.calendar_widget")
 -- Enable hotkeys help widget for VIM and other apps
 -- when client with a matching name is opened:
 require("awful.hotkeys_popup.keys")
@@ -252,12 +253,13 @@ awful.screen.connect_for_each_screen(function(s)
         s.mytasklist, -- Middle widget
         { -- Right widgets
             layout = wibox.layout.fixed.horizontal,
-            mykeyboardlayout,
-            wibox.widget.systray(),
-            mytextclock,
+            -- mykeyboardlayout,
+            -- wibox.widget.systray(),
+            --mytextclock,
             brightness_widget.get_widget(),
             volume_widget.get_widget(),
             battery_widget,
+            calendar_widget,
             -- s.mylayoutbox,
         },
     }
