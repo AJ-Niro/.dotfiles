@@ -218,6 +218,11 @@ end
 -- Re-set wallpaper when a screen's geometry changes (e.g. different resolution)
 screen.connect_signal("property::geometry", set_wallpaper)
 
+local divider_widget = wibox.widget {
+    widget = wibox.widget.textbox,
+    text = "|",
+}
+
 awful.screen.connect_for_each_screen(function(s)
     -- Wallpaper
     set_wallpaper(s)
@@ -326,6 +331,11 @@ awful.screen.connect_for_each_screen(function(s)
             brightness_widget.get_widget(),
             volume_widget.get_widget(),
             battery_widget,
+            wibox.widget {
+                divider_widget,
+                right = 10,
+                widget = wibox.container.margin
+            },
             calendar_widget,
             -- s.mylayoutbox,
         },
