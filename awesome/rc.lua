@@ -19,7 +19,7 @@ local battery_widget = require("widgets.battery.battery_widget")
 local volume_widget = require("widgets.volume.volume_widget")
 local brightness_widget = require("widgets.brightness.brightness_widget")
 local calendar_widget = require("widgets.calendar.calendar_widget")
-
+-- Configurations
 local xresources = require("beautiful.xresources")
 local dpi = xresources.apply_dpi
 local tag_names = { "a", "s", "d", "f", "j", "k", "l", ";" }
@@ -232,58 +232,17 @@ local divider_widget = wibox.widget {
     text = "|",
 }
 
--- Create a custom taglist widget
-local function create_taglist(s)
-    -- Create the taglist widget
-    local taglist = awful.widget.taglist {
-        screen  = s,
-        filter  = awful.widget.taglist.filter.all,
-        buttons = taglist_buttons,
-        layout  = {
-            spacing = dpi(5),
-            layout  = wibox.layout.fixed.horizontal
-        },
-        widget_template = {
-            {
-                {
-                    {
-                        id     = 'text_role',
-                        widget = wibox.widget.textbox,
-                    },
-                    margins = dpi(4),
-                    widget  = wibox.container.margin,
-                },
-                id     = 'background_role',
-                widget = wibox.container.background,
-            },
-            left  = dpi(2),
-            right = dpi(2),
-            widget = wibox.container.margin,
-        },
-    }
-
-    -- Create a container for the taglist
-    local taglist_container = wibox.container.background()
-    taglist_container.bg = "#fff"
-    taglist_container.shape = gears.shape.rounded_rect
-
-    -- Center the taglist widget inside the container
-    local centered_taglist = wibox.container.place(taglist, "center", "center")
-    taglist_container.widget = centered_taglist
-
-    return taglist_container
-end
-
-
-
-
 awful.screen.connect_for_each_screen(function(s)
     -- Wallpaper
     set_wallpaper(s)
 
+    local tag_names_with_spaces = {}
+    for _, tag in ipairs(tag_names) do
+        table.insert(tag_names_with_spaces, " " .. tag .. " ")
+    end
     -- Each screen has its own tag table.
     local screen_tags = awful.tag(
-        tag_names,
+        tag_names_with_spaces,
         s,
         awful.layout.layouts[0]
     )
@@ -360,34 +319,54 @@ awful.screen.connect_for_each_screen(function(s)
 
     -- Add widgets to the wibox
     s.mywibox:setup {
-        layout = wibox.layout.align.horizontal,
-        { -- Left widgets
-            layout = wibox.layout.fixed.horizontal,
-            spacing = 3,
-            -- mylauncher,
-            awesome_icon_container_widget,
-            s.mypromptbox,
-            s.mytasklist,
-        },
-        -- s.mytaglist,
-        create_taglist(s),
-        -- s.mytasklist, -- Middle widget
-        { -- Right widgets
-            layout = wibox.layout.fixed.horizontal,
-            -- mykeyboardlayout,
-            -- wibox.widget.systray(),
-            --mytextclock,
-            brightness_widget.get_widget(),
-            volume_widget.get_widget(),
-            battery_widget,
-            wibox.widget {
-                divider_widget,
-                right = 10,
-                widget = wibox.container.margin
+        {
+            {
+                {
+                    -- Left Widgets
+                    layout = wibox.layout.fixed.horizontal,
+                    spacing = 3,
+                    -- mylauncher,
+                    awesome_icon_container_widget,
+                    s.mytasklist,
+                    s.mypromptbox,
+                },
+                nil,
+                {
+                    -- Right Widgets
+                    layout = wibox.layout.fixed.horizontal,
+                    -- mykeyboardlayout,
+                    -- wibox.widget.systray(),
+                    --mytextclock,
+                    brightness_widget.get_widget(),
+                    volume_widget.get_widget(),
+                    battery_widget,
+                    wibox.widget {
+                        divider_widget,
+                        right = 10,
+                        widget = wibox.container.margin
+                    },
+                    calendar_widget,
+                    -- s.mylayoutbox,
+                },
+                layout = wibox.layout.align.horizontal,
             },
-            calendar_widget,
-            -- s.mylayoutbox,
+            {
+                -- Middle Widget
+                wibox.widget {
+                    wibox.widget {
+                        s.mytaglist,
+                        forced_height = 28,
+                        layout = wibox.container.background,
+                    },
+                    halign = "center",
+                    valign = "center",
+                    layout = wibox.container.place,
+                },
+                layout = wibox.container.background,
+            },
+            layout = wibox.layout.stack,
         },
+        layout = wibox.container.margin,
     }
 end)
 -- }}}
