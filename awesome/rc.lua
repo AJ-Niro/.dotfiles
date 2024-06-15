@@ -317,32 +317,54 @@ awful.screen.connect_for_each_screen(function(s)
 
     -- Add widgets to the wibox
     s.mywibox:setup {
-        layout = wibox.layout.align.horizontal,
-        { -- Left widgets
-            layout = wibox.layout.fixed.horizontal,
-            spacing = 3,
-            -- mylauncher,
-            awesome_icon_container_widget,
-            s.mytaglist,
-            s.mypromptbox,
-        },
-        s.mytasklist, -- Middle widget
-        {             -- Right widgets
-            layout = wibox.layout.fixed.horizontal,
-            -- mykeyboardlayout,
-            -- wibox.widget.systray(),
-            --mytextclock,
-            brightness_widget.get_widget(),
-            volume_widget.get_widget(),
-            battery_widget,
-            wibox.widget {
-                divider_widget,
-                right = 10,
-                widget = wibox.container.margin
+        {
+            {
+                {
+                    -- Left Widgets
+                    layout = wibox.layout.fixed.horizontal,
+                    spacing = 3,
+                    -- mylauncher,
+                    awesome_icon_container_widget,
+                    s.mytasklist,
+                    s.mypromptbox,
+                },
+                nil,
+                {
+                    -- Right Widgets
+                    layout = wibox.layout.fixed.horizontal,
+                    -- mykeyboardlayout,
+                    -- wibox.widget.systray(),
+                    --mytextclock,
+                    brightness_widget.get_widget(),
+                    volume_widget.get_widget(),
+                    battery_widget,
+                    wibox.widget {
+                        divider_widget,
+                        right = 10,
+                        widget = wibox.container.margin
+                    },
+                    calendar_widget,
+                    -- s.mylayoutbox,
+                },
+                layout = wibox.layout.align.horizontal,
             },
-            calendar_widget,
-            -- s.mylayoutbox,
+            {
+                -- Middle Widget
+                wibox.widget {
+                    wibox.widget {
+                        s.mytaglist,
+                        forced_height = 28,
+                        layout = wibox.container.background,
+                    },
+                    halign = "center",
+                    valign = "center",
+                    layout = wibox.container.place,
+                },
+                layout = wibox.container.background,
+            },
+            layout = wibox.layout.stack,
         },
+        layout = wibox.container.margin,
     }
 end)
 -- }}}
