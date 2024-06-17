@@ -5,6 +5,7 @@
 
 ### Packages
 * xrandr
+* xclip
 * acpi
 * amixer
 * playerctl
