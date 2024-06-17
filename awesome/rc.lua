@@ -485,19 +485,19 @@ globalkeys = gears.table.join(
     awful.key({ modkey }, "d", function()
             awful.spawn.with_shell("xrandr --auto")
         end,
-        { description = "Auto xrander", group = "Custom" }),
+        { description = "Auto xrander", group = "launcher" }),
     -- Manage Volume
     awful.key({}, "XF86AudioRaiseVolume", function()
         volume_widget.increase()
-    end, { description = "increase volume", group = "custom" }),
+    end, { description = "Increase volume", group = "media" }),
 
     awful.key({}, "XF86AudioLowerVolume", function()
         volume_widget.decrease()
-    end, { description = "decrease volume", group = "custom" }),
+    end, { description = "Decrease volume", group = "media" }),
 
     awful.key({}, "XF86AudioMute", function()
         volume_widget.mute()
-    end, { description = "mute volume", group = "custom" }),
+    end, { description = "Mute volume", group = "media" }),
 
     awful.key({}, "XF86MonBrightnessUp", function()
         brightness_widget.increase()
@@ -507,20 +507,19 @@ globalkeys = gears.table.join(
     end),
     awful.key({}, "XF86AudioPlay", function()
         awful.spawn.with_shell("playerctl play-pause")
-    end),
+    end, { description = "Toggle Play - Pause", group = "media" }),
     awful.key({}, "XF86AudioNext", function()
         awful.spawn.with_shell("playerctl next")
-    end),
+    end, { description = "Play Next", group = "media" }),
     awful.key({}, "XF86AudioPrev", function()
         awful.spawn.with_shell("playerctl previous")
-    end),
+    end, { description = "Play Previous", group = "media" }),
 
     -- Take a screenshot with gnome-screenshot and save it to ~/Pictures/Screenshots/
     awful.key({}, "Print", function()
-            awful.spawn.with_shell(
-                "gnome-screenshot -a -c -f ~/Pictures/Screenshots/Screenshot_from_$(date +'%Y-%m-%d_%H-%M-%S').png")
-        end,
-        { description = "take a screenshot and save to ~/Pictures/Screenshots/", group = "hotkeys" })
+        local image_directory = "~/Pictures/Screenshots/Screenshot_from_$(date +'%Y-%m-%d_%H-%M-%S').png"
+        awful.spawn.with_shell("gnome-screenshot -a -c -f " .. image_directory)
+    end, { description = "Take a screenshot", group = "media" })
 )
 
 clientkeys = gears.table.join(
