@@ -9,6 +9,7 @@
 * acpi
 * amixer
 * playerctl
+* picom
 
 ## Install
 
