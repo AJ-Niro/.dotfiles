@@ -428,8 +428,10 @@ globalkeys = gears.table.join(
         { description = "go back", group = "client" }),
 
     -- Standard program
-    awful.key({ modkey, }, "Return", function() awful.spawn(terminal) end,
+    awful.key({ modkey, }, "t", function() awful.spawn(terminal) end,
         { description = "open a terminal", group = "launcher" }),
+    awful.key({ modkey, }, "e", function() awful.spawn("nautilus") end,
+        { description = "open Nautilus", group = "launcher" }),
     awful.key({ modkey, "Control" }, "r", awesome.restart,
         { description = "reload awesome", group = "awesome" }),
     awful.key({ modkey, "Shift" }, "q", awesome.quit,
@@ -482,7 +484,7 @@ globalkeys = gears.table.join(
         { description = "show the menubar", group = "launcher" }),
 
     -- Custom
-    awful.key({ modkey }, "d", function()
+    awful.key({ modkey, "Control" }, "d", function()
             awful.spawn.with_shell("xrandr --auto")
         end,
         { description = "Auto xrander", group = "launcher" }),
