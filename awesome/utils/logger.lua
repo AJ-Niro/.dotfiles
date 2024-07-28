@@ -42,10 +42,14 @@ local function to_table(value)
 end
 
 local function log_to_file(data)
-    local log_file = io.open(os.getenv("HOME") .. "/.config/awesome/logs/debug.log", "a")
+    local date = os.date("%Y-%m-%d")
+    local log_file_path = os.getenv("HOME") .. "/.config/awesome/logs/debug_" .. date .. ".log"
+    local log_file = io.open(log_file_path, "a")
     local converted_data = to_table(data)
-    local serialized_data = serpent.block(converted_data, {comment = false, numformat = "%.2g", indent = "  "})
-    log_file:write(serialized_data .. "\n")
+    local serialized_data = serpent.block(converted_data, { comment = false, numformat = "%.2g", indent = "  " })
+    local time = os.date("[%H:%M:%S]")
+    local log_entry = time .. ': ' .. serialized_data .. "\n"
+    log_file:write(log_entry)
     log_file:close()
 end
 
