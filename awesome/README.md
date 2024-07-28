@@ -13,4 +13,6 @@
 
 ## Install
 
-`ln -s ~/.dotfiles/awesome ~/.config/awesome`
+* `ln -s ~/.dotfiles/awesome ~/.config/awesome`
+
+* Clone [Serpent: Lua serializer and pretty printer](https://github.com/pkulchenko/serpent) into `lib` folder

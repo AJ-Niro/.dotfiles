@@ -33,6 +33,8 @@ local has_fdo, freedesktop = pcall(require, "freedesktop")
 -- Custom Path's
 local home_path = os.getenv("HOME")
 
+local logger = require("utils.logger")
+
 -- {{{ Error handling
 -- Check if awesome encountered an error during startup and fell back to
 -- another config (This code will only ever execute for the fallback config)
