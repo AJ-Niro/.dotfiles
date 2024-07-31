@@ -19,6 +19,7 @@ local battery_widget = require("widgets.battery.battery_widget")
 local volume_widget = require("widgets.volume.volume_widget")
 local brightness_widget = require("widgets.brightness.brightness_widget")
 local calendar_widget = require("widgets.calendar.calendar_widget")
+local taglist_widget = require("widgets.taglist.taglist_widget")
 -- Configurations
 local tag_names = { "a", "s", "d", "f", "j", "k", "l", ";" }
 
@@ -172,24 +173,6 @@ mykeyboardlayout = awful.widget.keyboardlayout()
 -- Create a textclock widget
 mytextclock = wibox.widget.textclock()
 
--- Create a wibox for each screen and add it
-local taglist_buttons = gears.table.join(
-    awful.button({}, 1, function(t) t:view_only() end),
-    awful.button({ modkey }, 1, function(t)
-        if client.focus then
-            client.focus:move_to_tag(t)
-        end
-    end),
-    awful.button({}, 3, awful.tag.viewtoggle),
-    awful.button({ modkey }, 3, function(t)
-        if client.focus then
-            client.focus:toggle_tag(t)
-        end
-    end),
-    awful.button({}, 4, function(t) awful.tag.viewnext(t.screen) end),
-    awful.button({}, 5, function(t) awful.tag.viewprev(t.screen) end)
-)
-
 local tasklist_buttons = gears.table.join(
     awful.button({}, 1, function(c)
         if c == client.focus then
@@ -261,25 +244,6 @@ awful.screen.connect_for_each_screen(function(s)
         awful.button({}, 3, function() awful.layout.inc(-1) end),
         awful.button({}, 4, function() awful.layout.inc(1) end),
         awful.button({}, 5, function() awful.layout.inc(-1) end)))
-    -- Create a taglist widget
-    s.mytaglist = awful.widget.taglist {
-        screen = s,
-        filter = awful.widget.taglist.filter.all,
-        style = {
-            shape = gears.shape.rounded_bar,
-        },
-    }
-
-    local taglist_container = wibox.widget {
-        wibox.widget {
-            s.mytaglist,
-            forced_height = 22,
-            layout = wibox.container.background,
-        },
-        halign = "center",
-        valign = "center",
-        layout = wibox.container.place,
-    }
 
     -- Create a tasklist widget
     s.mytasklist = awful.widget.tasklist {
@@ -365,7 +329,7 @@ awful.screen.connect_for_each_screen(function(s)
             },
             {
                 -- Middle Widget
-                taglist_container,
+                taglist_widget(s),
                 layout = wibox.container.background,
             },
             layout = wibox.layout.stack,
