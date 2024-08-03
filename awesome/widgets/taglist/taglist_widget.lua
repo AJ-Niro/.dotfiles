@@ -38,13 +38,13 @@ local create_tag_widget = function(s, tag_index)
         },
         id                 = "index_bg",
         widget             = wibox.container.background,
-        bg                 = beautiful.bg_normal,
+        bg                 = beautiful.color_transparent,
         shape              = gears.shape.circle,
-        shape_border_width = 6,
-        shape_border_color = beautiful.bg_normal,
+        shape_border_width = 12,
+        shape_border_color = beautiful.color_transparent,
       },
       widget             = wibox.container.background,
-      bg                 = beautiful.bg_normal,
+      bg                 = beautiful.color_transparent,
       shape              = gears.shape.circle,
       shape_border_width = 3,
       shape_border_color = beautiful.fg_normal,
@@ -57,7 +57,7 @@ local create_tag_widget = function(s, tag_index)
         if current_tag.selected then
           index_bg[1].bg = beautiful.fg_normal
         else
-          index_bg[1].bg = beautiful.bg_normal
+          index_bg[1].bg = beautiful.color_transparent
         end
       end,
       update_callback    = function(self, current_tag)
@@ -65,7 +65,7 @@ local create_tag_widget = function(s, tag_index)
         if current_tag.selected then
           index_bg[1].bg = beautiful.fg_normal
         else
-          index_bg[1].bg = beautiful.bg_normal
+          index_bg[1].bg = beautiful.color_transparent
         end
       end,
     },

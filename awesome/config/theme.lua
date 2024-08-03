@@ -15,6 +15,8 @@ theme.font_family = "Hack Nerd Font Bold"
 theme.font_size = 10
 theme.font          = theme.font_family .. " " .. theme.font_size
 
+theme.color_transparent     = "#00000000"
+
 theme.bg_normal     = "#222222"
 theme.bg_focus      = "#535d6c"
 theme.bg_urgent     = "#ff0000"
