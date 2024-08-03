@@ -32,11 +32,10 @@ local create_tag_widget = function(s, tag_index)
     widget_template = {
       {
         {
-          id     = 'index_role',
           widget = wibox.widget.textbox,
           markup = '',
         },
-        id                 = "index_bg",
+        id                 = "dot_widget",
         widget             = wibox.container.background,
         bg                 = beautiful.color_transparent,
         shape              = gears.shape.circle,
@@ -53,20 +52,39 @@ local create_tag_widget = function(s, tag_index)
       forced_width       = beautiful.font_size * 2,
 
       create_callback    = function(self, current_tag)
-        local index_bg = self:get_children_by_id('index_bg')
+        local dot_widget = self:get_children_by_id('dot_widget')
+
         if current_tag.selected then
-          index_bg[1].bg = beautiful.fg_normal
-        else
-          index_bg[1].bg = beautiful.color_transparent
+          dot_widget[1].bg = beautiful.fg_normal
+          return
         end
+
+        local tag_have_clients = #current_tag:clients() > 0
+        if tag_have_clients then
+          dot_widget[1].bg = beautiful.fg_normal
+          dot_widget[1].shape_border_width = 17
+          return
+        end
+
+        dot_widget[1].bg = beautiful.color_transparent
       end,
+
       update_callback    = function(self, current_tag)
-        local index_bg = self:get_children_by_id('index_bg')
+        local dot_widget = self:get_children_by_id('dot_widget')
+
         if current_tag.selected then
-          index_bg[1].bg = beautiful.fg_normal
-        else
-          index_bg[1].bg = beautiful.color_transparent
+          dot_widget[1].bg = beautiful.fg_normal
+          dot_widget[1].shape_border_width = 12
+          return
         end
+
+        local tag_have_clients = #current_tag:clients() > 0
+        if tag_have_clients then
+          dot_widget[1].shape_border_width = 17
+          return
+        end
+
+        dot_widget[1].bg = beautiful.color_transparent
       end,
     },
   }
