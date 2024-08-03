@@ -2,35 +2,32 @@ local gears = require("gears")
 local awful = require("awful")
 local wibox = require("wibox")
 local beautiful = require("config.custom_beautiful")
+local logger = require("utils.logger")
 
-local taglist_widget = function(s)
-  local taglist_buttons = gears.table.join(
-    awful.button({}, 1, function(t) t:view_only() end),
-    awful.button({ modkey }, 1, function(t)
-      if client.focus then
-        client.focus:move_to_tag(t)
-      end
-    end),
-    awful.button({}, 3, awful.tag.viewtoggle),
-    awful.button({ modkey }, 3, function(t)
-      if client.focus then
-        client.focus:toggle_tag(t)
-      end
-    end),
-    awful.button({}, 4, function(t) awful.tag.viewnext(t.screen) end),
-    awful.button({}, 5, function(t) awful.tag.viewprev(t.screen) end)
-  )
+local taglist_buttons = gears.table.join(
+  awful.button({}, 1, function(t) t:view_only() end),
+  awful.button({ modkey }, 1, function(t)
+    if client.focus then
+      client.focus:move_to_tag(t)
+    end
+  end),
+  awful.button({}, 3, awful.tag.viewtoggle),
+  awful.button({ modkey }, 3, function(t)
+    if client.focus then
+      client.focus:toggle_tag(t)
+    end
+  end),
+  awful.button({}, 4, function(t) awful.tag.viewnext(t.screen) end),
+  awful.button({}, 5, function(t) awful.tag.viewprev(t.screen) end)
+)
 
-  local local_taglist = awful.widget.taglist {
+local create_tag_widget = function(s, tag_index)
+  return awful.widget.taglist {
     screen          = s,
-    filter          = awful.widget.taglist.filter.all,
+    filter          = function(t) return t.index == tag_index end,
     buttons         = taglist_buttons,
     style           = {
       shape = gears.shape.rounded_rect,
-    },
-    layout          = {
-      spacing = 5,
-      layout  = wibox.layout.fixed.horizontal
     },
     widget_template = {
       {
@@ -73,19 +70,43 @@ local taglist_widget = function(s)
       end,
     },
   }
+end
 
-  local taglist_container = wibox.widget {
-    wibox.widget {
-      local_taglist,
-      forced_height = 22,
-      layout = wibox.container.background,
-    },
+local middle_icon = wibox.widget {
+  widget       = wibox.widget.textbox,
+  font         = beautiful.font_family .. " " .. "18",
+  markup       = "<span>\u{f09fe}</span>",
+  forced_width = 18,
+}
+
+local middle_icon_margin = wibox.widget {
+  middle_icon,
+  top = -2,
+  right = 5,
+  left = 5,
+  widget = wibox.container.margin
+}
+
+local taglist_widget = function(s)
+  local tags_layout = wibox.layout.fixed.horizontal()
+  tags_layout.fill_space = true
+  tags_layout.spacing = 3
+  for i = 1, 8 do
+    if i == 5 then -- Add Middle Icon
+      tags_layout:add(middle_icon_margin)
+    end
+    local tag_widget = create_tag_widget(s, i)
+    tags_layout:add(tag_widget)
+  end
+
+  local taglist_placer = wibox.widget {
+    tags_layout,
     halign = "center",
     valign = "center",
     layout = wibox.container.place,
   }
 
-  return taglist_container
+  return taglist_placer
 end
 
 return taglist_widget
