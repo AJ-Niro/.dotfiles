@@ -20,6 +20,7 @@ local volume_widget = require("widgets.volume.volume_widget")
 local brightness_widget = require("widgets.brightness.brightness_widget")
 local calendar_widget = require("widgets.calendar.calendar_widget")
 local taglist_widget = require("widgets.taglist.taglist_widget")
+local tasklist_widget = require("widgets.tasklist.tasklist_widget")
 -- Configurations
 local tag_names = { "a", "s", "d", "f", "j", "k", "l", ";" }
 
@@ -245,52 +246,6 @@ awful.screen.connect_for_each_screen(function(s)
         awful.button({}, 4, function() awful.layout.inc(1) end),
         awful.button({}, 5, function() awful.layout.inc(-1) end)))
 
-    -- Create a tasklist widget
-    s.mytasklist = awful.widget.tasklist {
-        screen          = s,
-        filter          = awful.widget.tasklist.filter.currenttags,
-        buttons         = tasklist_buttons,
-        layout          = {
-            spacing_widget = {
-                {
-                    forced_width  = 5,
-                    forced_height = 24,
-                    thickness     = 1,
-                    color         = beautiful.bg_focus,
-                    widget        = wibox.widget.separator
-                },
-                valign = 'center',
-                halign = 'center',
-                widget = wibox.container.place,
-            },
-            spacing        = 1,
-            layout         = wibox.layout.fixed.horizontal
-        },
-        -- Notice that there is *NO* wibox.wibox prefix, it is a template,
-        -- not a widget instance.
-        widget_template = {
-            {
-                wibox.widget.base.make_widget(),
-                forced_height = 3,
-                id            = 'background_role',
-                widget        = wibox.container.background,
-            },
-            {
-                {
-                    id     = 'clienticon',
-                    widget = awful.widget.clienticon,
-                },
-                margins = 2,
-                widget  = wibox.container.margin
-            },
-            nil,
-            create_callback = function(self, c, index, objects) --luacheck: no unused args
-                self:get_children_by_id('clienticon')[1].client = c
-            end,
-            layout = wibox.layout.align.vertical,
-        },
-    }
-
     -- Create the wibox
     s.mywibox = awful.wibar({ position = "top", screen = s, height = 30 })
 
@@ -304,7 +259,7 @@ awful.screen.connect_for_each_screen(function(s)
                     spacing = 3,
                     -- mylauncher,
                     awesome_icon_container_widget,
-                    s.mytasklist,
+                    tasklist_widget(s),
                     s.mypromptbox,
                 },
                 nil,
