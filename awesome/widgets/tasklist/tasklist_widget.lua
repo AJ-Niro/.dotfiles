@@ -29,7 +29,7 @@ local tasklist_buttons = gears.table.join(
 local tasklist_widget = function(s)
 
   local sizes = {
-    low_bar = 2,
+    low_bar = 3,
   }
 
   return awful.widget.tasklist {
