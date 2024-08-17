@@ -2,6 +2,7 @@ local awful = require("awful")
 local wibox = require("wibox")
 local gears = require("gears")
 local beautiful = require("config.custom_beautiful")
+local logger = require("utils.logger")
 
 local tasklist_buttons = gears.table.join(
     awful.button({}, 1, function(c)
@@ -26,46 +27,75 @@ local tasklist_buttons = gears.table.join(
     end))
 
 local tasklist_widget = function(s)
+
+  local sizes = {
+    low_bar = 2,
+  }
+
   return awful.widget.tasklist {
     screen          = s,
     filter          = awful.widget.tasklist.filter.currenttags,
+    source  = function()
+      -- Get the list of all clients
+      local clients = awful.widget.tasklist.source.all_clients(
+        s,
+        awful.widget.tasklist.filter.currenttags
+      )
+      -- Reverse the list of clients
+      local reversed_clients = {}
+      for i = #clients, 1, -1 do
+        table.insert(reversed_clients, clients[i])
+      end
+      return reversed_clients
+    end,
     buttons         = tasklist_buttons,
     layout          = {
       spacing_widget = {
         {
-          forced_width  = 5,
-          forced_height = 24,
-          thickness     = 1,
+          forced_height = 10,
+          thickness     = 2,
           color         = beautiful.bg_focus,
-          widget        = wibox.widget.separator
+          widget        = wibox.widget.separator,
         },
         valign = 'center',
         halign = 'center',
         widget = wibox.container.place,
       },
-      spacing        = 1,
+      spacing        = 5,
       layout         = wibox.layout.fixed.horizontal
     },
     widget_template = {
       {
-        wibox.widget.base.make_widget(),
-        forced_height = 3,
-        id            = 'background_role',
-        widget        = wibox.container.background,
-      },
-      {
         {
-          id     = 'clienticon',
-          widget = awful.widget.clienticon,
+          {
+            {
+              id            = 'icon_role',
+              widget        = wibox.widget.imagebox,
+            },
+            valign = 'center',
+            halign = 'center',
+            widget = wibox.container.place,
+          },
+          {
+            wibox.widget.base.make_widget(),
+            id     = 'background_role',
+            bg     = beautiful.fg_normal,
+            widget = wibox.container.background,
+            forced_height = sizes.low_bar,
+          },
+          spacing = 2,
+          forced_num_cols = 1,
+          forced_num_rows = 2,
+          homogeneous     = false,
+          expand          = true,
+          layout = wibox.layout.grid,
         },
-        margins = 4,
-        widget  = wibox.container.margin
+        top = sizes.low_bar,
+        widget  = wibox.container.margin,
       },
-      nil,
-      create_callback = function(self, c)
-        self:get_children_by_id('clienticon')[1].client = c
-      end,
-      layout = wibox.layout.align.vertical,
+      top = 2,
+      bottom = 2,
+      widget  = wibox.container.margin,
     },
   }
 end
