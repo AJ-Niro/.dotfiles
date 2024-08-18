@@ -140,24 +140,23 @@ local awesome_icon_widget = wibox.widget {
     widget = wibox.widget.imagebox,
 }
 
-local awesome_icon_resizer_widget = wibox.widget {
-    {
-        awesome_icon_widget,
-        layout = wibox.layout.fixed.vertical,
-    },
-    forced_width  = 26, -- Set the desired width
-    forced_height = 26, -- Set the desired height
-    widget        = wibox.container.constraint,
+local awesome_icon = wibox.widget {
+    widget       = wibox.widget.textbox,
+    font         = beautiful.font_family .. " " .. "15",
+    markup       = "<span>\u{f354}</span>",
+    forced_width = 20,
 }
 
 local awesome_icon_container_widget = wibox.widget {
     {
-        awesome_icon_resizer_widget,
-        layout = wibox.layout.fixed.vertical,
+        awesome_icon,
+        halign = 'center', -- Horizontal alignment
+        valign = 'center', -- Vertical alignment
+        widget = wibox.container.place,
     },
-    halign = 'center', -- Horizontal alignment
-    valign = 'center', -- Vertical alignment
-    widget = wibox.container.place,
+    right = 2,
+    left = 5,
+    widget  = wibox.container.margin,
 }
 
 -- mylauncher = awful.widget.launcher({ image = beautiful.awesome_icon,
