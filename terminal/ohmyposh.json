@@ -16,12 +16,11 @@
     {
       "type": "prompt",
       "alignment": "left",
-      "newline": true,
       "segments": [
         {
           "foreground": "p:blue",
           "background": "p:black",
-          "leading_diamond": "\ue0b6",
+          "leading_diamond": "\n\ue0b6",
           "trailing_diamond": "\ue0b0",
           "style": "diamond",
           "template": "{{.Icon}} ",
