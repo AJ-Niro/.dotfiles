@@ -416,11 +416,7 @@ globalkeys = gears.table.join(
     end, { description = "Play Previous", group = "media" }),
 
     awful.key({}, "Print", function()
-        local current_date = os.date("%Y-%m-%d_%H-%M-%S")
-        local image_directory = "~/Pictures/Screenshots/Screenshot_from_" .. current_date .. ".png"
-        local screenshot_command = "gnome-screenshot -a -c -f " .. image_directory
-        local clipboard_command = "xclip -selection clipboard -t image/png -i " .. image_directory
-        awful.spawn.with_shell(screenshot_command .. " && " .. clipboard_command)
+        awful.spawn.with_shell("flameshot gui")
     end, { description = "Take a screenshot", group = "media" })
 )
 

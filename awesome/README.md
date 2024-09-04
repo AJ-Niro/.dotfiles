@@ -10,6 +10,7 @@
 * amixer
 * playerctl
 * picom
+* flameshot
 
 ## Install
 
