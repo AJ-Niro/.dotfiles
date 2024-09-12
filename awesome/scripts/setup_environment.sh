@@ -1,5 +1,6 @@
 # Change laptop Resolution
 xrandr --output eDP --mode 1280x720 --rate 60.02
+./setup_extra_monitor.sh
 
 # Configure touchpad tap and sroll
 TOUCHPAD_NAME="SYNA32AC:00 06CB:CD50 Touchpad"

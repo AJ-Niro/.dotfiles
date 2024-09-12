@@ -383,9 +383,9 @@ globalkeys = gears.table.join(
 
     -- Custom
     awful.key({ modkey, "Control" }, "d", function()
-            awful.spawn.with_shell("xrandr --auto")
+            awful.spawn.with_shell(home_path .. "/.dotfiles/awesome/scripts/setup_extra_monitor.sh")
         end,
-        { description = "Auto xrander", group = "launcher" }),
+        { description = "Setup extra monitor", group = "launcher" }),
     -- Manage Volume
     awful.key({}, "XF86AudioRaiseVolume", function()
         volume_widget.increase()
