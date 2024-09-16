@@ -9,7 +9,7 @@ config.colors = {
     foreground = 'rgb(223, 223, 223)',
 
     -- The default background color
-    background = 'rgb(26, 26, 26, 75%)',
+    background = 'rgb(26, 26, 26)',
 
     -- Make the selection text color fully transparent.
     selection_fg = 'none',
