@@ -4,7 +4,7 @@
   "final_space": true,
   "console_title_template": "{{ .Shell }} in {{ .Folder }}",
   "palette": {
-    "black": "#262B44",
+    "black": "#3a3a3a",
     "blue": "#6BA9F5",
     "green": "#59C9A5",
     "orange": "#F07623",
