@@ -463,7 +463,12 @@ clientkeys = gears.table.join(
             c.maximized_horizontal = not c.maximized_horizontal
             c:raise()
         end,
-        { description = "(un)maximize horizontally", group = "client" })
+        { description = "(un)maximize horizontally", group = "client" }),
+        awful.key({ modkey }, "i", 
+        function () 
+            awful.screen.focus_relative(1) 
+        end,
+        {description = "focus the next screen", group = "screen"})
 )
 
 -- Bind all key numbers to tags.
