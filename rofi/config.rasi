@@ -2,7 +2,6 @@ configuration {
   modi: "window,run,ssh,drun";
   font: "Hack Nerd Font Regular 12";
   show-icons: true;
-  run-command: "nohup {cmd} >/dev/null 2>&1";
   timeout {
       action: "kb-cancel";
       delay:  0;
