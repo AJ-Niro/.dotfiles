@@ -23,11 +23,9 @@ local brightness_textbox_widget = wibox.widget {
 
 -- Function to update the brightness widget
 function brightness_widget.update()
-  awful.spawn.easy_async_with_shell("xrandr --verbose | grep -i brightness | cut -f2 -d ' ' | head -n1", function(stdout)
+  awful.spawn.easy_async_with_shell("brightnessctl | grep 'Current brightness:' | cut -f2 -d '(' | cut -f1 -d '%'", function(stdout)
     local brightness = tonumber(stdout)
-    local brightness_percentage = math.floor(brightness * 100)
-
-    brightness_textbox_widget.text = brightness_percentage .. "% "
+    brightness_textbox_widget.text = brightness .. "% "
   end)
 end
 
@@ -35,8 +33,8 @@ function brightness_widget.increase()
   local brightness_text = brightness_textbox_widget.text
   local brightness_percentage_str = brightness_text:gsub("%%", "")
   local brightness_percentage = tonumber(brightness_percentage_str)
-  local brightness = (brightness_percentage * 0.01) + 0.01
-  awful.spawn("xrandr --output eDP --brightness " .. brightness + 0.01)
+  local brightness = brightness_percentage + 5
+  awful.spawn("brightnessctl set ".. brightness .."%")
   brightness_widget.update()
 end
 
@@ -44,8 +42,8 @@ function brightness_widget.decrease()
   local brightness_text = brightness_textbox_widget.text
   local brightness_percentage_str = brightness_text:gsub("%%", "")
   local brightness_percentage = tonumber(brightness_percentage_str)
-  local brightness = (brightness_percentage * 0.01) - 0.01
-  awful.spawn("xrandr --output eDP --brightness " .. brightness)
+  local brightness = brightness_percentage - 5
+  awful.spawn("brightnessctl set ".. brightness .."%")
   brightness_widget.update()
 end
 
