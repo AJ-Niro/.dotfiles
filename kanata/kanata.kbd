@@ -3,7 +3,7 @@
 )
 
 (defsrc
-    a s d f j k l ;
+    caps a s d f j k l ;
 )
 
 (defvar
@@ -12,6 +12,7 @@
 )
 
 (defalias
+    caps-mod (tap-hold $tap-timeout $hold-timeout esc caps)
     a-mod (tap-hold $tap-timeout $hold-timeout a lalt)
     s-mod (tap-hold $tap-timeout $hold-timeout s lmet)
     d-mod (tap-hold $tap-timeout $hold-timeout d lctl)
@@ -23,5 +24,5 @@
 )
 
 (deflayer base
-    @a-mod @s-mod @d-mod @f-mod @j-mod @k-mod @l-mod @;-mod
+    @caps-mod @a-mod @s-mod @d-mod @f-mod @j-mod @k-mod @l-mod @;-mod
 )
