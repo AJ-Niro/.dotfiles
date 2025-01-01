@@ -3,7 +3,7 @@
 )
 
 (defsrc
-    caps a s d f j k l ;
+    caps a s d f j k l ; spc
 )
 
 (defvar
@@ -21,8 +21,16 @@
     k-mod (tap-hold $tap-timeout $hold-timeout k lctl)
     l-mod (tap-hold $tap-timeout $hold-timeout l lmet)
     ;-mod (tap-hold $tap-timeout $hold-timeout ; lalt)
+    nav-toggle (tap-hold $tap-timeout $hold-timeout spc (layer-toggle second-layer))
 )
 
 (deflayer base
-    @caps-mod @a-mod @s-mod @d-mod @f-mod @j-mod @k-mod @l-mod @;-mod
+    @caps-mod @a-mod @s-mod @d-mod @f-mod @j-mod @k-mod @l-mod @;-mod @nav-toggle
+)
+
+(deflayermap second-layer
+    j left
+    k up
+    l down
+    ; rght
 )
