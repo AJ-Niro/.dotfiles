@@ -2,6 +2,11 @@
     process-unmapped-keys yes
 )
 
+(deflocalkeys-linux
+  page-up 104
+  page-down 109
+)
+
 (defsrc
     caps a s d f j k l ; spc
 )
@@ -33,4 +38,8 @@
     k up
     l down
     ; rght
+    a home
+    s page-down
+    d page-up
+    f end
 )
