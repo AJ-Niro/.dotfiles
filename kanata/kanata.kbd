@@ -18,6 +18,7 @@
 
 (defalias
     caps-mod (tap-hold $tap-timeout $hold-timeout esc caps)
+
     a-mod (tap-hold $tap-timeout $hold-timeout a lalt)
     s-mod (tap-hold $tap-timeout $hold-timeout s lmet)
     d-mod (tap-hold $tap-timeout $hold-timeout d lctl)
@@ -26,6 +27,16 @@
     k-mod (tap-hold $tap-timeout $hold-timeout k lctl)
     l-mod (tap-hold $tap-timeout $hold-timeout l lmet)
     ;-mod (tap-hold $tap-timeout $hold-timeout ; lalt)
+
+    a-mod-second (tap-hold $tap-timeout $hold-timeout home lalt)
+    s-mod-second (tap-hold $tap-timeout $hold-timeout page-down lmet)
+    d-mod-second (tap-hold $tap-timeout $hold-timeout page-up lctl)
+    f-mod-second (tap-hold $tap-timeout $hold-timeout end lsft)
+    j-mod-second (tap-hold $tap-timeout $hold-timeout left lsft)
+    k-mod-second (tap-hold $tap-timeout $hold-timeout up lctl)
+    l-mod-second (tap-hold $tap-timeout $hold-timeout down lmet)
+    ;-mod-second (tap-hold $tap-timeout $hold-timeout rght lalt)
+
     nav-toggle (tap-hold $tap-timeout $hold-timeout spc (layer-toggle second-layer))
 )
 
@@ -34,12 +45,12 @@
 )
 
 (deflayermap second-layer
-    j left
-    k up
-    l down
-    ; rght
-    a home
-    s page-down
-    d page-up
-    f end
+    a @a-mod-second
+    s @s-mod-second
+    d @d-mod-second
+    f @f-mod-second
+    j @j-mod-second
+    k @k-mod-second
+    l @l-mod-second
+    ; @;-mod-second
 )
