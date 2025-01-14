@@ -30,11 +30,10 @@ local volume_textbox_widget = wibox.widget {
 
 -- Function to update the volume widget
 function volume_widget.update()
-  awful.spawn.easy_async_with_shell("amixer get Master", function(stdout)
-    local volume = stdout:match("(%d?%d?%d)%%")
-    local status = stdout:match("%[(o%D%D?)%]")
+  awful.spawn.easy_async_with_shell('echo "$(pamixer --get-volume)-$(pamixer --get-mute)"', function(stdout)
+    local volume, mute_status = stdout:match("^(%d+)-(%a+)")
 
-    if status == "off" then
+    if mute_status == "true" then
       volume_icon_widget.markup = '<span>' .. volume_nerd_icons.mute .. '</span>'
       volume_textbox_widget.text = " Mute "
     else
@@ -54,18 +53,25 @@ function volume_widget.update()
 end
 
 function volume_widget.increase()
-  awful.spawn("amixer set Master 5%+")
+  awful.spawn("pamixer --increase 5")
   volume_widget.update()
 end
 
 function volume_widget.decrease()
-  awful.spawn("amixer set Master 5%-")
+  awful.spawn("pamixer --decrease 5")
   volume_widget.update()
 end
 
 function volume_widget.mute()
-  awful.spawn("amixer set Master toggle")
-  volume_widget.update()
+  awful.spawn.easy_async_with_shell("pamixer --get-mute", function(stdout)
+    local mute_state = stdout:gsub("%s+", "")
+    if mute_state == "true" then
+      awful.spawn("pamixer --unmute")
+    else
+      awful.spawn("pamixer --mute")
+    end
+    volume_widget.update()
+  end)
 end
 
 function volume_widget.get_widget()
@@ -74,7 +80,7 @@ function volume_widget.get_widget()
       volume_icon_widget,
       volume_textbox_widget,
       layout = wibox.layout.fixed.horizontal,
-      spacing = -3,
+      spacing = -5,
     },
     left = 5,
     right = 0,

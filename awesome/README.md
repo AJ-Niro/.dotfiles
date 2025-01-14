@@ -7,7 +7,7 @@
 * xrandr
 * xclip
 * acpi
-* amixer
+* pamixer
 * playerctl
 * picom
 * flameshot
