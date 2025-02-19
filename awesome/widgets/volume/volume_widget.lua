@@ -12,9 +12,9 @@ local volume_nerd_icons = {
   mute = "\u{eee8}",
 }
 
-local font_for_icon = beautiful.font
+local font_for_icon = beautiful.font 
 if beautiful.font_family then
-  font_for_icon = beautiful.font_family .. " " .. "12"
+  font_for_icon = beautiful.font_family .. " " ..  (beautiful.font_size + 2)
 end
 
 local volume_icon_widget = wibox.widget {

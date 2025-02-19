@@ -23,9 +23,9 @@ local battery_textbox = wibox.widget {
   font = beautiful.font,
 }
 
-local font_for_icon = beautiful.font
+local font_for_icon = beautiful.font 
 if beautiful.font_family then
-  font_for_icon = beautiful.font_family .. " " .."12"
+  font_for_icon = beautiful.font_family .. " " ..  (beautiful.font_size + 2)
 end
 
 local battery_icon = wibox.widget {

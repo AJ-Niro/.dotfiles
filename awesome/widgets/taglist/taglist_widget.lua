@@ -48,8 +48,8 @@ local create_tag_widget = function(s, tag_index)
       shape_border_width = 3,
       shape_border_color = beautiful.fg_normal,
       shape_clip         = true,
-      forced_height      = beautiful.font_size * 2,
-      forced_width       = beautiful.font_size * 2,
+      forced_height      = beautiful.font_size + 8,
+      forced_width       = beautiful.font_size + 8,
 
       create_callback    = function(self, current_tag)
         local dot_widget = self:get_children_by_id('dot_widget')
@@ -90,11 +90,17 @@ local create_tag_widget = function(s, tag_index)
   }
 end
 
+local font_for_icon = beautiful.font 
+if beautiful.font_family then
+  font_for_icon = beautiful.font_family .. " " ..  (beautiful.font_size + 6)
+end
+
+
 local middle_icon = wibox.widget {
   widget       = wibox.widget.textbox,
-  font         = beautiful.font_family .. " " .. "18",
+  font         = font_for_icon,
   markup       = "<span>\u{f09fe}</span>",
-  forced_width = 18,
+  forced_width =  beautiful.font_size + 3,
 }
 
 local middle_icon_margin = wibox.widget {
